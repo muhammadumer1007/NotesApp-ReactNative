@@ -2,9 +2,13 @@ import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {styles} from './style';
 
-const CreateNote = ({route}) => {
-  const {txtTitle, txtDescription, setTxtDescription, setTxtTitle, createNote} =
-    route.params;
+const CreateNote = ({
+  txtTitle,
+  txtDescription,
+  setTxtDescription,
+  setTxtTitle,
+  createNote,
+}) => {
   return (
     <View>
       <Text style={styles.title}>Create A Note</Text>

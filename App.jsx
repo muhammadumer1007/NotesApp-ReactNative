@@ -5,13 +5,14 @@ import NotesContainer from './Components/Notes/NotesContainer';
 import NotificationModal from './Components/NotificationModal/NotificationModal';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const App = () => {
   const Stack = createStackNavigator();
 
   const [txtTitle, setTxtTitle] = useState('');
   const [txtDescription, setTxtDescription] = useState('');
-  const [notesArr, setnotesArr] = useState([]);
+  const [asyncStorageNotes, setasyncStorageNotes] = useState([]);
   const [showNotificationState, setshowNotificationState] = useState(false);
   const [notificationtxt, setNotificationtxt] = useState('');
 
@@ -23,7 +24,7 @@ const App = () => {
       setshowNotificationState(false);
     }, 2000);
   };
-  const createNote = () => {
+  const createNote = async () => {
     if (txtTitle == '' && txtDescription == '') {
       showNotification('Empty Note Discarded');
       return;
@@ -32,47 +33,60 @@ const App = () => {
       title: txtTitle,
       description: txtDescription,
     };
-    setnotesArr([...notesArr, note]);
+
+    let noteArr = [...asyncStorageNotes, note];
+    setasyncStorageNotes(noteArr);
+    try {
+      await AsyncStorage.setItem('@NOTES', JSON.stringify(noteArr));
+    } catch (error) {
+      console.warn(error);
+    }
 
     showNotification('Note Created SuccessFully');
     setTxtDescription('');
     setTxtTitle('');
   };
 
+  useEffect(() => {
+    (async () => {
+      let notes;
+      try {
+        notes = await AsyncStorage.getItem('@NOTES');
+      } catch (error) {
+        console.warn(error);
+      }
+      if (notes == null) {
+        setasyncStorageNotes([]);
+      } else {
+        setasyncStorageNotes(JSON.parse(notes));
+      }
+    })();
+  }, []);
+
   // useEffect(() => {
-  //   console.warn(notesArr);
-  // }, [notesArr]);
+  //   const getNotesFromAsyncStorage = async () => {
+  //     const notes = await AsyncStorage.getItem('@NOTES');
+  //     console.warn(notes);
+  //   };
+  //   getNotesFromAsyncStorage();
+  // }, []);
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Home"
-          component={NotesContainer}
-          initialParams={{notesArray: notesArr}}
-        />
+    <View>
+      <CreateNote
+        txtTitle={txtTitle}
+        txtDescription={txtDescription}
+        setTxtTitle={setTxtTitle}
+        setTxtDescription={setTxtDescription}
+        createNote={createNote}
+      />
 
-        <Stack.Screen
-        options={{
-          title:'Create Notes'
-        }}
-          name="CreateNote"
-          component={CreateNote}
-          initialParams={{
-            txtTitle: txtTitle,
-            txtDescription: txtDescription,
-            setTxtTitle: setTxtTitle,
-            setTxtDescription: setTxtDescription,
-            createNote: createNote,
-          }}
-        />
+      <NotesContainer notesArray={asyncStorageNotes} />
 
-        {/* {showNotificationState && (
-          <NotificationModal notificationTitle={notificationtxt} />
-        )} */}
-      </Stack.Navigator>
-    </NavigationContainer>
-    // <Text>Hello</Text>
+      {showNotificationState && (
+        <NotificationModal notificationTitle={notificationtxt} />
+      )}
+    </View>
   );
 };
 
