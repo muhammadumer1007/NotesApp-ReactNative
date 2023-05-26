@@ -1,5 +1,4 @@
 import {StyleSheet} from 'react-native';
-import {mainColor} from '../../Assets/Constants';
 export const styles = StyleSheet.create({
     outer:{
         backgroundColor:'grey',

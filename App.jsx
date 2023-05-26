@@ -6,6 +6,7 @@ import NotificationModal from './Components/NotificationModal/NotificationModal'
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import SingleNotePreview from './Components/Notes/SingleNotePreview';
 
 const App = () => {
   const Stack = createStackNavigator();
@@ -32,6 +33,13 @@ const App = () => {
     const note = {
       title: txtTitle,
       description: txtDescription,
+      createdAt:
+        new Date().getMonth() +
+        1 +
+        '-' +
+        new Date().getDate() +
+        '-' +
+        new Date().getFullYear(),
     };
 
     let noteArr = [...asyncStorageNotes, note];
@@ -73,7 +81,7 @@ const App = () => {
 
   return (
     <View>
-      <CreateNote
+      {/* <CreateNote
         txtTitle={txtTitle}
         txtDescription={txtDescription}
         setTxtTitle={setTxtTitle}
@@ -85,7 +93,8 @@ const App = () => {
 
       {showNotificationState && (
         <NotificationModal notificationTitle={notificationtxt} />
-      )}
+      )} */}
+      <SingleNotePreview />
     </View>
   );
 };

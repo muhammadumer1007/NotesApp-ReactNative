@@ -15,7 +15,7 @@ const Note = ({notesDircetionStyles, note}) => {
       {/* top section */}
       <View style={noteStyles.noteTopSection}>
         <Text style={noteStyles.date}>Tags</Text>
-        <Text style={noteStyles.date}>11/5/23</Text>
+        <Text style={noteStyles.date}>{note.createdAt}</Text>
       </View>
       {/* bottom section */}
       <View>

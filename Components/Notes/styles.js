@@ -46,13 +46,50 @@ export const noteContainerStyles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 5,
   },
-  noNotesContainer:{
-    flexDirection:'row',
-    alignItems:'center',
-    marginTop:10
-  }
+  noNotesContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 10,
+  },
 });
 
-export const noteAddBtnStyles = StyleSheet.create({
-  container: {},
+export const SingleNotePreviewStyles = StyleSheet.create({
+  title: {
+    fontSize: 30,
+    fontWeight: '700',
+    color: 'black',
+  },
+  description: {
+    fontSize: 20,
+    marginTop: 10,
+  },
+  container: {
+    width: '90%',
+    marginHorizontal: '5%',
+    marginTop: 10,
+    height: '100%',
+  },
+  iconContainer: {
+    alignSelf: 'flex-end',
+    flexDirection: 'row',
+    marginBottom: 10,
+  },
+  iconBtn: {
+    marginLeft: 45,
+  },
+  bottomContainer: {
+    position: 'absolute',
+    top: '90%',
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: 'red',
+    paddingVertical: 18,
+    paddingHorizontal: 20,
+  },
+  item: {
+    color: 'white',
+    fontSize: 20,
+  },
 });
