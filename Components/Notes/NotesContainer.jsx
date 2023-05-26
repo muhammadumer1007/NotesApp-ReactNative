@@ -19,13 +19,12 @@ const NotesContainer = ({notesArray}) => {
     let directionSetByUser = await AsyncStorage.getItem(
       '@USER_SET_NOTES_DIRECTION',
     );
-    if (!directionSetByUser) {
-      return;
+    if (directionSetByUser != null) {
+      directionSetByUser = JSON.parse(directionSetByUser);
+      setNoteWidth(directionSetByUser.width);
+      setNotesMargin(directionSetByUser.margin);
+      console.log(directionSetByUser);
     }
-    directionSetByUser = JSON.parse(directionSetByUser);
-    setNoteWidth(directionSetByUser.width);
-    setNotesMargin(directionSetByUser.margin);
-    console.log(directionSetByUser);
   };
 
   useEffect(() => {
@@ -37,15 +36,15 @@ const NotesContainer = ({notesArray}) => {
       setNoteWidth('90%');
       setNotesMargin('5%');
       noteDirection = {
-        width: noteWidth,
-        margin: notesMargin,
+        width: '90%',
+        margin: '5%',
       };
     } else {
       setNoteWidth('45%');
       setNotesMargin('2.5%');
       noteDirection = {
-        width: noteWidth,
-        margin: notesMargin,
+        width: '45%',
+        margin: '2.5%',
       };
     }
 
@@ -66,39 +65,40 @@ const NotesContainer = ({notesArray}) => {
         noteWidth={noteWidth}
         notesMargin={notesMargin}
       />
+      <ScrollView>
+        <View style={noteContainerStyles.container}>
+          {notesArray.length ? (
+            // <FlatList
+            //   data={notesArray}
+            //   renderItem={({item}) => {
+            //     <Note
+            //       notesDircetionStyles={{width: noteWidth, margin: notesMargin}}
+            //       note={item}
+            //     />
+            //   }}
+            // />
 
-      <View style={noteContainerStyles.container}>
-        {notesArray.length ? (
-          // <FlatList
-          //   data={notesArray}
-          //   renderItem={({item}) => {
-          //     <Note
-          //       notesDircetionStyles={{width: noteWidth, margin: notesMargin}}
-          //       note={item}
-          //     />
-          //   }}
-          // />
-
-          notesArray.map((e, i) => {
-            return (
-              <Note
-                notesDircetionStyles={{width: noteWidth, margin: notesMargin}}
-                note={e}
-                key={i}
-              />
-            );
-          })
-        ) : (
-          <View style={noteContainerStyles.noNotesContainer}>
-            <Text style={noteContainerStyles.noNotesHeading}>
-              No Notes Press Here To
-            </Text>
-            <TouchableHighlight>
-              <Text style={noteContainerStyles.createNoteBtn}>Add</Text>
-            </TouchableHighlight>
-          </View>
-        )}
-      </View>
+            notesArray.map((e, i) => {
+              return (
+                <Note
+                  notesDircetionStyles={{width: noteWidth, margin: notesMargin}}
+                  note={e}
+                  key={i}
+                />
+              );
+            })
+          ) : (
+            <View style={noteContainerStyles.noNotesContainer}>
+              <Text style={noteContainerStyles.noNotesHeading}>
+                No Notes Press Here To
+              </Text>
+              <TouchableHighlight>
+                <Text style={noteContainerStyles.createNoteBtn}>Add</Text>
+              </TouchableHighlight>
+            </View>
+          )}
+        </View>
+      </ScrollView>
     </View>
   );
 };
