@@ -93,3 +93,38 @@ export const SingleNotePreviewStyles = StyleSheet.create({
     fontSize: 20,
   },
 });
+
+export const ColorModalStyle = StyleSheet.create({
+  outer: {
+    position: 'absolute',
+    top: '80%',
+    width: '100%',
+    backgroundColor: '#f0eeeb',
+  },
+  inner: {
+    paddingVertical: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+  },
+  colorPalete: {
+    width: 30,
+    height: 30,
+    borderRadius: 100,
+  },
+  danger: {
+    backgroundColor: 'red',
+  },
+  primary: {
+    backgroundColor: 'blue',
+  },
+  coral: {
+    backgroundColor: 'coral',
+  },
+  success: {
+    backgroundColor: 'green',
+  },
+  warning: {
+    backgroundColor: 'orange',
+  },
+});
